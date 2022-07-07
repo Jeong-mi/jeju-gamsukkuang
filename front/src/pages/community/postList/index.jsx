@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
+import { useRecoilValue } from "recoil";
+
+import { userState } from "states";
 
 import styled from "styled-components";
 import http from "libs/apiController";
+import Modal from "components/modal";
+import ModalPortal from "components/modal/modalPortal";
 
 const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-
   const [List, setList] = useState([]);
+  const loginUserId = useRecoilValue(userState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setPage(1);
@@ -30,10 +36,13 @@ const PostList = ({ headSelected }) => {
     fetchFunction();
   }, [page, headSelected]);
 
-  // const List = useGetPostList(queryData);
-
   const handleClick = (postId) => {
-    navigate(`/community/${postId}`);
+    if (loginUserId === null) {
+      setIsModalOpen(true);
+      return;
+    } else {
+      navigate(`/community/${postId}`);
+    }
   };
 
   const handlePageChange = (page) => {
@@ -43,33 +52,43 @@ const PostList = ({ headSelected }) => {
   if (!List.data) return <span>loading...</span>;
 
   return (
-    <ListFlexBox>
-      <ItemsBox>
-        {List.data.articles.map((data) => (
-          <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
-            <Title>
-              <label>
-                {data?.head === "question"
-                  ? "질문"
-                  : data?.head === "info"
-                  ? "정보"
-                  : "잡담"}
-              </label>
-              <h3>{data?.title}</h3>
-            </Title>
-          </ItemBox>
-        ))}
-      </ItemsBox>
-      <Pager>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={10}
-          totalItemsCount={List.data.total}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-        />
-      </Pager>
-    </ListFlexBox>
+    <>
+      <ListFlexBox>
+        <ItemsBox>
+          {List.data.articles.map((data) => (
+            <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
+              <Title>
+                <label>
+                  {data?.head === "question"
+                    ? "질문"
+                    : data?.head === "info"
+                    ? "정보"
+                    : "잡담"}
+                </label>
+                <h3>{data?.title}</h3>
+              </Title>
+            </ItemBox>
+          ))}
+        </ItemsBox>
+        <Pager>
+          <Pagination
+            activePage={page}
+            itemsCountPerPage={10}
+            totalItemsCount={List.data.total}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}
+          />
+        </Pager>
+      </ListFlexBox>
+      {isModalOpen && (
+        <ModalPortal>
+          <Modal
+            setIsOpenModal={setIsModalOpen}
+            modalMessage="로그인 후 이용 가능합니다."
+          />
+        </ModalPortal>
+      )}
+    </>
   );
 };
 

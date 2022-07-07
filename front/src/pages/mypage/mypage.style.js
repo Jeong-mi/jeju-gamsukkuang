@@ -50,8 +50,8 @@ const StampImgLv6 = styled.img`
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
-  justify-content: space-evenly;
+  margin-left: 30px;
+  gap: 10px;
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     justify-content: space-between;

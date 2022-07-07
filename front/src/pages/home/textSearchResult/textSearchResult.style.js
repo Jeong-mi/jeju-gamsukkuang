@@ -5,7 +5,7 @@ const TextSearchResultBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 442px;
+  width: 400px;
   height: auto;
   max-height: 250px;
   margin: 20px auto 0;
@@ -15,6 +15,10 @@ const TextSearchResultBox = styled.div`
   padding: 16px 24px;
   background: ${({ theme }) => theme.colors.gray01};
   border-radius: 10px;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 300px;
+  }
 
   span {
     font-size: 13px;

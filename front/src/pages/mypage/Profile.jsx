@@ -56,9 +56,12 @@ const Profile = ({ email, nickname, experience, profileImgUrl }) => {
 };
 
 const ProfileBox = styled.div`
+  height: 200px;
   display: flex;
   flex-direction: row;
-  padding-left: 15px;
+  align-items: center;
+  justify-content: center;
+
   @media screen and ${({ theme }) => theme.breakPoint} {
     justify-content: space-evenly;
   }

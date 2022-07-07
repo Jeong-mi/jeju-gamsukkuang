@@ -1,10 +1,4 @@
-import React, {
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
@@ -29,7 +23,7 @@ const PostEdit = () => {
   const quillRef = useRef();
 
   const [reRender, setReRender] = useState(false);
-  const [prevPost, setPrevPost] = useState({
+  const [, setPrevPost] = useState({
     title: "",
     content: "",
     head: "",

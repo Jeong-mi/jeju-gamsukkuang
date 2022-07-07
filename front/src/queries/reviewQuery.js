@@ -16,7 +16,7 @@ export const useGetRatingInfo = (postId) => {
 export const useGetReviewList = (postId) => {
   const fetchReviewList = async ({ pageParam = 1 }) => {
     const res = await http.get(
-      `review/${postId}/list?page=${pageParam}&limit=10`,
+      `review/${postId}/list?page=${pageParam}&limit=6`,
     );
     const { reviews, totalPage } = res.data;
     return { reviews, totalPage, pageParam, nextPage: pageParam + 1 };
@@ -39,6 +39,7 @@ export const usePostReview = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("reviews");
+        queryClient.invalidateQueries("rating");
       },
     },
   );
@@ -49,6 +50,7 @@ export const useDeleteReview = () => {
   return useMutation((reviewId) => http.delete(`review/${reviewId}`), {
     onSuccess: () => {
       queryClient.invalidateQueries("reviews");
+      queryClient.invalidateQueries("rating");
     },
     onError: (err) => console.log(err),
   });
@@ -57,7 +59,10 @@ export const useDeleteReview = () => {
 export const useUpdateReview = (id) => {
   const queryClient = useQueryClient();
   return useMutation(async (review) => await http.put(`review/${id}`, review), {
-    onSuccess: () => queryClient.invalidateQueries("reviews"),
+    onSuccess: () => {
+      queryClient.invalidateQueries("reviews");
+      queryClient.invalidateQueries("rating");
+    },
     onError: (err) => console.log(err),
   });
 };

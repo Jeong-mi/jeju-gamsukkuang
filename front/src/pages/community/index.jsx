@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
+import { userState } from "states";
 import Dropdown from "./dropdown";
+import Modal from "components/modal";
+import ModalPortal from "components/modal/modalPortal";
 
 import styled from "styled-components";
 import PostList from "./postList";
@@ -9,26 +13,47 @@ import PostList from "./postList";
 const Community = () => {
   const navigate = useNavigate();
   const [headSelected, setHeadSelected] = useState("");
+  const loginUserId = useRecoilValue(userState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dropDownFunction = (itemValue) => {
     setHeadSelected(itemValue);
   };
 
+  const handleClick = () => {
+    if (loginUserId === null) {
+      setIsModalOpen(true);
+      return;
+    } else {
+      navigate("/community/post");
+    }
+  };
+
   return (
-    <CommunityBox>
-      <DropdownBox>
-        <h2>📌 게시판</h2>
-        <Dropdown dropDownFunction={dropDownFunction} />
-      </DropdownBox>
-      <PostBox>
-        <PostList headSelected={headSelected} />
-      </PostBox>
-      <ButtonBox>
-        <button type="button" onClick={() => navigate("/community/post")}>
-          게시글 작성
-        </button>
-      </ButtonBox>
-    </CommunityBox>
+    <>
+      <CommunityBox>
+        <DropdownBox>
+          <h2>📌 게시판</h2>
+          <Dropdown dropDownFunction={dropDownFunction} />
+        </DropdownBox>
+        <PostBox>
+          <PostList headSelected={headSelected} />
+        </PostBox>
+        <ButtonBox>
+          <button type="button" onClick={handleClick}>
+            게시글 작성
+          </button>
+        </ButtonBox>
+      </CommunityBox>
+      {isModalOpen && (
+        <ModalPortal>
+          <Modal
+            setIsOpenModal={setIsModalOpen}
+            modalMessage="로그인 후 이용 가능합니다."
+          />
+        </ModalPortal>
+      )}
+    </>
   );
 };
 

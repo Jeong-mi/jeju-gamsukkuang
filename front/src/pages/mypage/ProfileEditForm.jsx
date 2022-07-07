@@ -79,14 +79,14 @@ const ProfileEditForm = ({
           Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
         </Level>
         {!mediaQuery ? (
-          <div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Button onClick={() => setIsEditing(false)}>취소</Button>
             <Button type="submit" onClick={handleSubmit}>
               완료
             </Button>
           </div>
         ) : (
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Button onClick={() => setIsEditing(false)}>취소</Button>
             <Button type="submit" onClick={handleSubmit}>
               완료
@@ -101,9 +101,11 @@ const ProfileEditForm = ({
 export default ProfileEditForm;
 
 const ProfileBox = styled.div`
+  height: 200px;
   display: flex;
   flex-direction: row;
-  padding-left: 15px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledInput = styled.input`

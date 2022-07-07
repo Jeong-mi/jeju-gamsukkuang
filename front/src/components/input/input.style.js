@@ -8,6 +8,7 @@ const StyledInput = styled.input`
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.gray02};
   outline: none;
+  font-size: 14px;
 
   &:focus {
     border: 1px solid ${({ theme }) => theme.colors.primary};

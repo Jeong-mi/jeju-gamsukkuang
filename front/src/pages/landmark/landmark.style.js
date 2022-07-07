@@ -7,10 +7,12 @@ const ReviewFormContainer = styled.form`
 const InputForm = styled.textarea`
   width: 100%;
   height: 200px;
+  padding: 1% 1%;
   margin: 1% 0;
   resize: none;
   font-size: ${({ theme }) => theme.fontSizes.lg};
   border: 1px solid ${({ theme }) => theme.colors.gray02};
+  border-radius: 10px;
   outline-color: ${({ theme }) => theme.colors.secondary};
   &:focus {
     border: 1px solid ${({ theme }) => theme.colors.primary};

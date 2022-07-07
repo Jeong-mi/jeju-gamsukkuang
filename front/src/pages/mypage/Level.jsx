@@ -143,8 +143,7 @@ const Number = styled.div`
   margin-left: 3rem;
 
   @media screen and ${({ theme }) => theme.breakPoint} {
-    margin-left: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0 1rem 1rem;
     font-size: 1.5rem;
   }
 `;

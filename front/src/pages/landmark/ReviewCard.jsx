@@ -1,21 +1,34 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StarRatingWithEmpty } from "./StarRating";
 import { AiFillDelete } from "react-icons/ai";
 import { RiEdit2Fill } from "react-icons/ri";
 import { useDeleteReview } from "queries/reviewQuery";
 import ReviewEditForm from "./ReviewEditForm";
 import { CardHeader, CardText } from "./landmark.style";
+import { useRecoilValue } from "recoil";
+import { userState } from "states";
 
 export const ReviewCard = ({ review, idx }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const { userNickName, content, rating, createdAt, id, userId } = review;
 
-  const { userNickName, content, rating, createdAt, id } = review;
+  const loginUserId = useRecoilValue(userState)?.id;
+
   const deleteReview = useDeleteReview();
 
   const handleDeleteReview = () => {
     deleteReview.mutate(id);
   };
+
+  useEffect(() => {
+    if (loginUserId === userId) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [userId, loginUserId]);
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -28,14 +41,19 @@ export const ReviewCard = ({ review, idx }) => {
             <StarRatingWithEmpty number={rating} />
             <CardText>{userNickName}</CardText>
             <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
-            <IconContainer>
-              <RiEdit2Fill
-                size="1.7rem"
-                cursor="pointer"
-                onClick={() => setIsEditing(true)}
-              />
-              <TrashBox size="1.7rem" onClick={handleDeleteReview} />
-            </IconContainer>
+            {isVisible && (
+              <>
+                {" "}
+                <IconContainer>
+                  <RiEdit2Fill
+                    size="1.7rem"
+                    cursor="pointer"
+                    onClick={() => setIsEditing(true)}
+                  />
+                  <TrashBox size="1.7rem" onClick={handleDeleteReview} />
+                </IconContainer>
+              </>
+            )}
           </CardHeader>
           <CardContent>
             <CardText>{content}</CardText>

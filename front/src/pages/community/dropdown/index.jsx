@@ -85,6 +85,7 @@ const Input = styled.input`
   cursor: pointer;
   border: none;
   background: ${({ theme }) => theme.colors.white};
+  font-size: 13px;
 `;
 
 const MenuWrapper = styled.div`

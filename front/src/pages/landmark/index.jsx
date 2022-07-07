@@ -81,6 +81,7 @@ const ImgContainer = styled.div`
   background-image: url(${(props) => props.img});
   background-size: cover;
   background-repeat: no-repeat;
+  z-index: -1;
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;

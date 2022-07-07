@@ -37,7 +37,7 @@ const LogInForm = styled.form`
 `;
 
 const LoginButton = styled.button`
-  width: 442px;
+  width: 400px;
   height: 48px;
   font-weight: 600;
   color: ${(props) => (props.isActive ? "#fff" : "#ff881d")};

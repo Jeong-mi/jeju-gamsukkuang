@@ -9,6 +9,7 @@ import { useGetPost } from "queries/communityQuery";
 import PostEdit from "../postEdit";
 
 import styled from "styled-components";
+import Modal from "components/modal";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const PostDetail = () => {
   const postId = params.id;
   const postItem = useGetPost(postId);
   const postUserId = postItem?.data?.userId;
-  const loginUserId = useRecoilValue(userState).id;
+  const loginUserId = useRecoilValue(userState);
   const [isVisible, setIsVisible] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
 
@@ -30,7 +31,7 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    if (loginUserId === postUserId) {
+    if (loginUserId.id === postUserId) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -110,6 +111,9 @@ const PostDetailBox = styled.div`
       border-radius: 10px;
       font-size: 12px;
       font-weight: 600;
+    }
+    button:nth-child(1) {
+      background: ${({ theme }) => theme.colors.gray02};
     }
 
     button:nth-child(2) {

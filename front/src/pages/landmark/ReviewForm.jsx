@@ -104,6 +104,7 @@ const ReviewForm = ({ id }) => {
               maxLength="200"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              placeholder="리뷰를 입력해주세요."
             />
             <Footer>
               <div>{content.length}/200</div>
