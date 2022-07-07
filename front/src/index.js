@@ -9,6 +9,7 @@ import { RecoilRoot } from "recoil";
 import App from "App";
 import theme from "styles/Theme";
 import GlobalStyle from "./styles";
+import { ScrollToTop } from "components/ScrollToTop";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ root.render(
       {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       <RecoilRoot>
         <BrowserRouter>
+          <ScrollToTop />
           <ThemeProvider theme={theme}>
             <Suspense fallback={<div>Loading...</div>}>
               <GlobalStyle />
