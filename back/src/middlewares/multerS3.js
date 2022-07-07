@@ -13,48 +13,50 @@ const s3 = new AWS.S3({
 	region: process.env.AWS_REGION,
 });
 
-const storage = multerS3({
-	s3: s3,
-	acl: "public-read",
-	bucket: process.env.AWS_S3_BUCKET,
-	contentType: multerS3.AUTO_CONTENT_TYPE,
-	key: (req, file, cb) => {
-		const ext = file.mimetype.split("/")[1];
-		const dateTime = moment().format("YYYYMMDDHHmmss");
+const storage = (purpose) => {
+	return multerS3({
+		s3: s3,
+		acl: "public-read",
+		bucket: `${process.env.AWS_S3_BUCKET}/${purpose}`,
+		contentType: multerS3.AUTO_CONTENT_TYPE,
+		key: (req, file, cb) => {
+			const ext = file.mimetype.split("/")[1];
+			const dateTime = moment().format("YYYYMMDDHHmmss");
+	
+			if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
+				return cb(new Error("system.error.noImageFile"));
+			}
+	
+			cb(
+				null,
+				`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${
+					file.originalname
+				}`
+			);
+		},
+	});
+};
 
-		if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
-			return cb(new Error("system.error.noImageFile"));
-		}
-
-		cb(
-			null,
-			`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${
-				file.originalname
-			}`
-		);
-	},
-});
-
-const s3Single = () => {
+const s3Single = (purpose) => {
 	const limits = {
 		fileSize: 5242880 * 2, //10MB
 	};
 
 	const upload = multer({
-		storage: storage,
+		storage: storage(purpose),
 		limits,
 	}).single("imgFile");
 
 	return upload;
 };
 
-const s3Multi = () => {
+const s3Multi = (purpose) => {
 	const limits = {
 		fileSize: 5242880 * 4, //20MB
 	};
 
 	const upload = multer({
-		storage: storage,
+		storage: storage(purpose),
 		limits,
 	}).array("imgFile");
 

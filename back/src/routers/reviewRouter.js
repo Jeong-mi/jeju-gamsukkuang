@@ -11,7 +11,7 @@ const reviewRouter = Router();
 reviewRouter.post(
   "/review",
   loginRequired,
-  s3Multi(),
+  s3Multi("review"),
   async (req, res, next) => {
     try {
       const bodySchema = Joi.object().keys({
@@ -102,7 +102,7 @@ reviewRouter.get("/review/:tourId/info", async (req, res, next) => {
 reviewRouter.put(
   "/review/:id",
   loginRequired,
-  s3Multi(),
+  s3Multi("review"),
   async (req, res, next) => {
     try {
       const paramSchema = Joi.object().keys({

@@ -105,7 +105,7 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 userRouter.put(
   "/user/profileImg",
   loginRequired,
-  s3Single(),
+  s3Single("profile"),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;

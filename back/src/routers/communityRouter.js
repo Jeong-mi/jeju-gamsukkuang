@@ -44,7 +44,7 @@ communityRouter.post("/community", loginRequired, async (req, res, next) => {
 communityRouter.post(
   "/community/image",
   loginRequired,
-  s3Multi(),
+  s3Multi("community"),
   async (req, res, next) => {
     try {
       const fileSchema = Joi.any().empty().required();
@@ -67,7 +67,7 @@ communityRouter.post(
 communityRouter.put(
   "/community/:id",
   loginRequired,
-  s3Multi(),
+  s3Multi("community"),
   async (req, res, next) => {
     try {
       const bodySchema = Joi.object().keys({

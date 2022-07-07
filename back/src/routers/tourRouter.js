@@ -37,7 +37,7 @@ tourRouter.get("/tour/search", async (req, res, next) => {
 });
 
 // 이미지로 검색한 랜드마크 정보 불러오기 (ai의 flask 서버와 연동)
-tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
+tourRouter.post("/tour/image", s3Single("searchNauth"), async (req, res, next) => {
   try {
     const fileValidator = Joi.any().empty().required();
     await fileValidator.validateAsync(req.file);
