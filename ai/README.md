@@ -11,7 +11,7 @@
 * 데이터셋
 
     * 학습 대상(랜드마크) 이미지 선정
-        * 국내 랜드마크 이미지([AIHub-랜드마크 이미지](https://aihub.or.kr/aidata/8009))
+        * 국내 랜드마크 이미지([AIHub-랜드마크 이미지](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=56))
         * 랜드마크 선정 기준 : 비짓제주([visitjeju.net](https://www.visitjeju.net/kr)) 여행지 목록 중, 좋아요순•리뷰순 기준으로 정렬 후 선정
         * 랜드마크 수 : 54개 (약 10,000장)
         * 랜드마크 목록 :  [categoryList.csv](./back/public/categoryList.csv)
